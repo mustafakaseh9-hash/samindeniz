@@ -12,230 +12,532 @@
             --gold-light: #e6bc6a;
             --silver: #e0e0e0;
             --white: #ffffff;
-            --shadow: rgba(0, 0, 0, 0.5);
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --light-bg: #fdfdfd;
+            /* تم تعديل اللون هنا ليصبح أغمق قليلاً من السابق */
+            --contrast-bg: #e2e2e2; 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
-        body { font-family: 'Cairo', sans-serif; background-color: var(--white); color: #333; line-height: 1.6; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--white); color: #333; line-height: 1.6; overflow-x: hidden; }
 
-        /* الهيدر المحسن */
         header {
-            background: rgba(18, 18, 18, 0.95);
-            backdrop-filter: blur(8px); /* تأثير زجاجي ناعم */
-            padding: 8px 8%;
+            background: var(--glass);
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            padding: 10px 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
+            position: fixed;
+            width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom: 3px solid var(--gold);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.4s ease;
         }
 
         .logo-nav-img {
-            height: 65px; /* اللوغو صار أكبر وأوضح */
+            height: 60px;
             width: auto;
-            border: 2px solid var(--gold);
-            border-radius: 10px;
-            padding: 4px;
-            background: rgba(255, 255, 255, 0.05);
-            transition: 0.3s ease;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .logo-nav-img:hover { transform: scale(1.05); border-color: var(--white); }
+        .logo-nav-img:hover { transform: rotate(3deg) scale(1.1); border-color: var(--gold); }
+
+        nav { display: flex; align-items: center; }
+        
+        /* تباعد الروابط حسب اتجاه الصفحة */
+        html[dir="rtl"] nav a { margin-right: 25px; margin-left: 0; }
+        html[dir="ltr"] nav a { margin-left: 25px; margin-right: 0; }
 
         nav a { 
             color: white; 
             text-decoration: none; 
-            margin-right: 25px; 
             font-weight: 700; 
             font-size: 1rem; 
+            position: relative;
+            padding: 5px 10px;
+            transition: 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: 0.3s ease;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        nav a:hover { color: var(--gold); transform: translateY(-2px); }
+        nav a:hover::after { width: 80%; }
+
+        /* تنسيق قائمة اختيار اللغة */
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        html[dir="rtl"] .lang-dropdown { margin-right: 25px; margin-left: 0; }
+        html[dir="ltr"] .lang-dropdown { margin-left: 25px; margin-right: 0; }
+
+        .lang-btn {
+            background: var(--glass);
+            color: white;
+            border: 1px solid var(--gold);
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .lang-btn:hover {
+            background: var(--gold);
+            color: var(--main-dark);
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 45px;
+            background: rgba(18, 18, 18, 0.95);
+            min-width: 120px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            z-index: 1;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+        html[dir="rtl"] .dropdown-content { left: 0; right: auto; }
+        html[dir="ltr"] .dropdown-content { right: 0; left: auto; }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            margin: 0;
+            font-size: 0.9rem;
+            text-align: center;
             transition: 0.3s;
         }
-        nav a:hover { color: var(--gold); text-shadow: 0 0 8px var(--gold); }
 
-        /* قسم الترحيب - رفعنا الكتابة وضفنا بروز جبار */
+        .dropdown-content a:hover {
+            background: var(--gold);
+            color: var(--main-dark);
+        }
+
+        .lang-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
         .hero {
-            position: relative; /* أضيفت لدعم تموضع الفيديو */
-            background-size: cover;
-            background-position: center;
-            height: 89vh;
+            position: relative;
+            height: 75vh;
+            width: 100%;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start; /* رفع النص للأعلى */
-            border-bottom: 5px solid rgba(192, 192, 192, 0.9);
-backdrop-filter: blur(10px);
--webkit-backdrop-filter: blur(10px);
-            padding-top: 10px; /* مسافة التوازن */
+            justify-content: center;
             align-items: center;
             color: white;
             text-align: center;
-            padding-left: 20px;
-            padding-right: 20px;
-            overflow: hidden; /* لضمان عدم خروج الفيديو عن الحدود */
+            overflow: hidden;
         }
 
-        /* كود تنسيق الفيديو كخلفية */
         .hero video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .hero h1 { 
+            font-size: clamp(2.5rem, 8vw, 5rem); 
+            font-weight: 900; 
+            margin-bottom: 20px; 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p { 
+            font-size: clamp(1.1rem, 2vw, 1.6rem); 
+            color: var(--silver);
+            font-weight: 700;
+            background: rgba(0,0,0,0.4);
+            display: inline-block;
+            padding: 10px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 40px;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .hero-btn {
+            background: var(--gold);
+            color: var(--main-dark);
+            padding: 16px 45px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: 900;
+            display: inline-block;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(197, 160, 89, 0.4);
+        }
+        .hero-btn:hover { background: var(--white); transform: scale(1.05) translateY(-5px); }
+
+        .paint-section { padding: 100px 10%; background: var(--light-bg); text-align: center; }
+        .section-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 10px; }
+        .section-title::after { content: ''; display: block; width: 80px; height: 5px; background: var(--gold); margin: 15px auto; border-radius: 10px; }
+
+        .search-wrapper { margin: 50px auto; max-width: 600px; }
+        #colorSearch { 
+            width: 100%; padding: 20px 35px; border: 1px solid #ddd; border-radius: 100px; 
+            font-family: 'Cairo'; font-size: 1.1rem; outline: none; transition: 0.4s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
+        }
+
+        /* شبكة الألوان - اتجاه العرض مرن حسب اللغة */
+        .paint-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; max-width: 1200px; margin: 50px auto; }
+        html[dir="rtl"] .paint-grid { direction: ltr; } /* للحفاظ على ترتيب الأرقام لليسار دائماً */
+        html[dir="ltr"] .paint-grid { direction: ltr; }
+        
+        .color-card { background: #fff; border-radius: 20px; overflow: hidden; transition: 0.5s; box-shadow: 0 10px 20px rgba(0,0,0,0.03); border: 1px solid #f0f0f0; }
+        .color-card:hover { transform: translateY(-15px); border-color: var(--gold); }
+        .color-swatch { height: 150px; width: 100%; transition: 0.5s; }
+        .color-info { padding: 20px; background: #fff; }
+        .ral-code { display: block; font-weight: 900; font-size: 1.1rem; color: var(--main-dark); }
+        .color-name { display: block; font-size: 0.75rem; color: #888; text-transform: uppercase; font-weight: 700; }
+
+        .btn-more { background: var(--main-dark); color: var(--gold); border: 2px solid var(--gold); padding: 15px 60px; border-radius: 100px; font-weight: 900; cursor: pointer; transition: 0.4s; font-family: 'Cairo'; }
+        .btn-more:hover { background: var(--gold); color: white; }
+
+        /* الفاصل المائل */
+        .section-divider {
+            height: 150px;
+            background: var(--light-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        .section-divider::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            z-index: 1;
+            background: var(--contrast-bg);
+            clip-path: polygon(0 100%, 100% 0, 100% 100%);
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 2; /* ليكون النص فوق الفيديو */
-        }
-
-        .hero h1 { 
-            font-size: clamp(2.5rem, 5vw, 4rem); 
-            font-weight: 900; 
-            margin-bottom: 15px; 
-            color: var(--white);
-            /* بروز النص القوي */
-            text-shadow: 3px 3px 15px rgba(0,0,0,1), 0 0 25px rgba(0,0,0,0.5); 
-        }
-
-        .hero p { 
-            font-size: clamp(1.1rem, 2vw, 1.5rem); 
-            color: var(--silver);
-            font-weight: 700;
-            background: rgba(0,0,0,0.3);
-            padding: 8px 25px;
-            border-radius: 50px;
-            border-right: 5px solid var(--gold);
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-            margin-bottom: 30px;
-        }
-
-        /* زر الأكشن تحت العنوان */
-        .hero-btn {
-            background: var(--gold);
-            color: var(--main-dark);
-            padding: 12px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1.3rem;
-            font-weight: 900;
-            transition: 0.3s;
-            box-shadow: 0 8px 20px rgba(197, 160, 89, 0.3);
-        }
-        .hero-btn:hover { background: var(--white); transform: translateY(-3px); }
-
-        /* الأقسام المحسنة */
-        .section { padding: 90px 10%; text-align: center; background: #fafafa; }
-        .section h2 { font-size: 2.5rem; margin-bottom: 40px; color: var(--main-dark); }
+        .section { padding: 100px 10%; text-align: center; background: var(--contrast-bg); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; }
         .card { 
             background: white; 
-            padding: 40px; 
-            border-radius: 15px; 
-            border-top: 5px solid var(--gold); 
-            transition: 0.4s ease;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            padding: 50px 30px; 
+            border-radius: 25px; 
+            border-top: 6px solid var(--gold); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
         }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .card h3 { color: var(--main-dark); font-size: 1.6rem; margin-bottom: 15px; }
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            border-top-color: var(--main-dark);
+        }
+        .card:active {
+            transform: translateY(-30px) scale(1.05);
+            transition: all 0.3s ease;
+        }
 
-        /* صندوق التواصل  */
-        .contact-box { 
-            background: linear-gradient(145deg, #1a1a1a, #000);
-            color: white; 
-            padding: 70px 10%; 
-            border-radius: 30px; 
-            margin: 50px 10%; 
-            border: 1px solid rgba(197, 160, 89, 0.2);
-        }
-        
-        .phone-link {
-            display: inline-block;
-            background: var(--gold);
-            color: var(--main-dark);
-            padding: 15px 45px;
-            border-radius: 100px;
-            text-decoration: none;
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-top: 30px;
-            direction: ltr;
-            transition: 0.3s;
-            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4);
-        }
-        .phone-link:hover { background: white; transform: scale(1.05); }
+        .contact-box { background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%); color: white; padding: 80px 10%; border-radius: 50px; margin: 60px 10%; border: 1px solid rgba(197, 160, 89, 0.3); text-align: center; }
+        .phone-link { display: inline-block; background: var(--gold); color: var(--main-dark); padding: 18px 50px; border-radius: 100px; text-decoration: none; font-size: 2rem; font-weight: 900; margin-top: 35px; direction: ltr; }
 
-        footer { background: #000; color: #666; text-align: center; padding: 40px; border-top: 1px solid #222; }
+        footer { background: #000; color: #777; text-align: center; padding: 50px; }
 
-        @media (max-width: 768px) {
-            header { padding: 15px 5%; }
-            .logo-nav-img { height: 65px; }
-            nav { display: none; } /* يفضل عمل منيو للموبايل لاحقاً */
-            .hero h1 { font-size: 2.2rem; }
-            .contact-box { margin: 20px 5%; padding: 40px 15px; }
-        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 1100px) { .paint-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .paint-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 2.5rem; } }
     </style>
 </head>
 <body>
 
-<header>
-    <!-- اللوغو المحسن في اليمين -->
+<header id="mainHeader">
     <img src="1.jpg.jpeg" alt="سمين دنيز" class="logo-nav-img">
     <nav>
-        <a href="#home">الرئيسية</a>
-        <a href="#about">المنتجات</a>
-        <a href="#contact">اتصل بنا</a>
+        <a href="#home" id="navHome">الرئيسية</a>
+        <a href="#colors" id="navColors">كتالوج الألوان</a>
+        <a href="#about" id="navAbout">المنتجات</a>
+        <a href="#contact" id="navContact">اتصل بنا</a>
+        
+        <div class="lang-dropdown">
+            <button class="lang-btn" id="langBtn">🌐 العربية</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="changeLanguage('ar'); return false;">العربية</a>
+                <a href="#" onclick="changeLanguage('en'); return false;">English</a>
+            </div>
+        </div>
     </nav>
 </header>
 
 <section class="hero" id="home">
-    <!-- الفيديو الخلفي -->
-    <video autoplay muted loop playsinline>
+    <video autoplay muted loop playsinline poster="1.jpg.jpeg">
         <source src="1.mp4" type="video/mp4">
     </video>
-
-    <!-- المحتوى النصي -->
     <div class="hero-content">
-        <h1>SAMIN DENIZ - سمين دنيز</h1>
-        <p>الوكيل المعتمد لدهانات "أرواد" البحرية في اللاذقية</p>
-        <a href="#contact" class="hero-btn">اطلب استشارة فنية الآن</a>
+        <h1 id="heroTitle">SAMIN DENIZ</h1>
+        <p id="heroSubtitle">الوكيل المعتمد لدهانات "أرواد" البحرية في اللاذقية</p>
+        <br>
+        <a href="#contact" class="hero-btn" id="heroBtn">اطلب استشارة فنية الآن</a>
     </div>
 </section>
+
+<section class="paint-section" id="colors">
+    <h2 class="section-title" id="colorsTitle">كتالوج الألوان</h2>
+    <div class="search-wrapper">
+        <input type="text" id="colorSearch" placeholder="ابحث عن رقم RAL أو اسم اللون..." onkeyup="filterColors()">
+    </div>
+    <div class="paint-grid" id="colorGrid">
+        <div class="color-card" data-code="9002" data-name="grey white"><div class="color-swatch" style="background:#e7ebda"></div><div class="color-info"><span class="ral-code">RAL 9002</span><span class="color-name">Grey White</span></div></div>
+        <div class="color-card" data-code="9010" data-name="pure white"><div class="color-swatch" style="background:#f7fbe9"></div><div class="color-info"><span class="ral-code">RAL 9010</span><span class="color-name">Pure White</span></div></div>
+        <div class="color-card" data-code="1015" data-name="light ivory"><div class="color-swatch" style="background:#e6d195"></div><div class="color-info"><span class="ral-code">RAL 1015</span><span class="color-name">Light Ivory</span></div></div>
+        <div class="color-card" data-code="1013" data-name="oyster white"><div class="color-swatch" style="background:#e3d9c6"></div><div class="color-info"><span class="ral-code">RAL 1013</span><span class="color-name">Oyster White</span></div></div>
+        <div class="color-card" data-code="1023" data-name="traffic yellow"><div class="color-swatch" style="background:#f7b500"></div><div class="color-info"><span class="ral-code">RAL 1023</span><span class="color-name">Traffic Yellow</span></div></div>
+        <div class="color-card" data-code="1028" data-name="melon yellow"><div class="color-swatch" style="background:#ffa500"></div><div class="color-info"><span class="ral-code">RAL 1028</span><span class="color-name">Melon Yellow</span></div></div>
+        <div class="color-card" data-code="2009" data-name="traffic orange"><div class="color-swatch" style="background:#e15501"></div><div class="color-info"><span class="ral-code">RAL 2009</span><span class="color-name">Traffic Orange</span></div></div>
+        <div class="color-card" data-code="3020" data-name="traffic red"><div class="color-swatch" style="background:#c1121c"></div><div class="color-info"><span class="ral-code">RAL 3020</span><span class="color-name">Traffic Red</span></div></div>
+        <div class="color-card" data-code="8003" data-name="clay brown" style="display:none"><div class="color-swatch" style="background:#844c2b"></div><div class="color-info"><span class="ral-code">RAL 8003</span><span class="color-name">Clay Brown</span></div></div>
+        <div class="color-card" data-code="8011" data-name="nut brown" style="display:none"><div class="color-swatch" style="background:#5b3423"></div><div class="color-info"><span class="ral-code">RAL 8011</span><span class="color-name">Nut Brown</span></div></div>
+        <div class="color-card" data-code="3000" data-name="flame red" style="display:none"><div class="color-swatch" style="background:#af2b1e"></div><div class="color-info"><span class="ral-code">RAL 3000</span><span class="color-name">Flame Red</span></div></div>
+        <div class="color-card" data-code="3004" data-name="purple red" style="display:none"><div class="color-swatch" style="background:#7e191b"></div><div class="color-info"><span class="ral-code">RAL 3004</span><span class="color-name">Purple Red</span></div></div>
+        <div class="color-card" data-code="7032" data-name="pebble grey" style="display:none"><div class="color-swatch" style="background:#b0af98"></div><div class="color-info"><span class="ral-code">RAL 7032</span><span class="color-name">Pebble Grey</span></div></div>
+        <div class="color-card" data-code="6018" data-name="yellow green" style="display:none"><div class="color-swatch" style="background:#4b6e2a"></div><div class="color-info"><span class="ral-code">RAL 6018</span><span class="color-name">Yellow Green</span></div></div>
+        <div class="color-card" data-code="6001" data-name="emerald green" style="display:none"><div class="color-swatch" style="background:#005b2b"></div><div class="color-info"><span class="ral-code">RAL 6001</span><span class="color-name">Emerald Green</span></div></div>
+        <div class="color-card" data-code="6005" data-name="moss green" style="display:none"><div class="color-swatch" style="background:#002e24"></div><div class="color-info"><span class="ral-code">RAL 6005</span><span class="color-name">Moss Green</span></div></div>
+        <div class="color-card" data-code="5015" data-name="sky blue" style="display:none"><div class="color-swatch" style="background:#226c9d"></div><div class="color-info"><span class="ral-code">RAL 5015</span><span class="color-name">Sky Blue</span></div></div>
+        <div class="color-card" data-code="5002" data-name="ultramarine blue" style="display:none"><div class="color-swatch" style="background:#002366"></div><div class="color-info"><span class="ral-code">RAL 5002</span><span class="color-name">Ultramarine Blue</span></div></div>
+        <div class="color-card" data-code="5017" data-name="traffic blue" style="display:none"><div class="color-swatch" style="background:#063971"></div><div class="color-info"><span class="ral-code">RAL 5017</span><span class="color-name">Traffic Blue</span></div></div>
+        <div class="color-card" data-code="5013" data-name="cobalt blue" style="display:none"><div class="color-swatch" style="background:#1e213d"></div><div class="color-info"><span class="ral-code">RAL 5013</span><span class="color-name">Cobalt Blue</span></div></div>
+        <div class="color-card" data-code="9006" data-name="white aluminium" style="display:none"><div class="color-swatch" style="background:#a5a8a6"></div><div class="color-info"><span class="ral-code">RAL 9006</span><span class="color-name">White Aluminium</span></div></div>
+        <div class="color-card" data-code="7040" data-name="window grey" style="display:none"><div class="color-swatch" style="background:#7d8489"></div><div class="color-info"><span class="ral-code">RAL 7040</span><span class="color-name">Window Grey</span></div></div>
+        <div class="color-card" data-code="7046" data-name="telegrey 2" style="display:none"><div class="color-swatch" style="background:#82898e"></div><div class="color-info"><span class="ral-code">RAL 7046</span><span class="color-name">Telegrey 2</span></div></div>
+        <div class="color-card" data-code="7016" data-name="anthracite grey" style="display:none"><div class="color-swatch" style="background:#383e42"></div><div class="color-info"><span class="ral-code">RAL 7016</span><span class="color-name">Anthracite Grey</span></div></div>
+    </div>
+    <div id="loadMoreSection">
+        <button class="btn-more" id="loadMoreBtn" onclick="toggleColors()">عرض كافة الألوان</button>
+    </div>
+</section>
+
+<div class="section-divider"></div>
 
 <section class="section" id="about">
-    <h2 style="position: relative; display: inline-block; padding-bottom: 10px;">
-        لماذا تختار دهاناتنا؟
-        <span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--gold);"></span>
-    </h2>
-    <div class="grid" style="margin-top: 40px;">
+    <h2 class="section-title" id="aboutTitle">مميزات دهاناتنا</h2>
+    <div class="grid" style="margin-top: 50px;">
         <div class="card">
-            <h3>جودة "أرواد" العريقة</h3>
-            <p>نقدم تركيبات أثبتت كفاءتها لسنوات طويلة في أصعب ظروف البحر الأبيض المتوسط.</p>
+            <h3 id="feat1Title">حماية تدوم</h3>
+            <p id="feat1Desc">تركيبات متطورة لمواجهة الرطوبة العالية والأملاح في مياه البحر.</p>
         </div>
         <div class="card">
-            <h3>مقاومة فائقة للتآكل</h3>
-            <p>حماية مطلقة لهياكل السفن من الأملاح والرطوبة العالية لضمان عمر أطول لسفينتك.</p>
+            <h3 id="feat2Title">جودة عالمية</h3>
+            <p id="feat2Desc">دهانات "أرواد" هي الخيار الأول للمهنيين في المنطقة الصناعية باللاذقية.</p>
         </div>
         <div class="card">
-            <h3>دعم فني متخصص</h3>
-            <p>فريقنا في المنطقة الصناعية باللاذقية جاهز دائماً لتقديم أفضل الاستشارات الفنية.</p>
+            <h3 id="feat3Title">تنوع لوني</h3>
+            <p id="feat3Desc">تشكيلة واسعة من أكواد RAL لتناسب كافة احتياجات الصيانة والطلاء.</p>
         </div>
     </div>
 </section>
 
-<section class="contact-box" id="contact" style="text-align: center;">
-    <h2>طلب طلبية أو استشارة فنية</h2>
-    <p>تواصل معنا مباشرة للحصول على أفضل الأسعار والعروض</p>
+<section class="contact-box" id="contact">
+    <h2 id="contactTitle">تواصل مع الخبراء</h2>
+    <p id="contactSubtitle">نحن هنا لمساعدتك في اختيار الطلاء الأنسب لمشروعك</p>
     <a href="tel:+905533327333" class="phone-link">+90 553 332 73 33</a>
-    <p style="margin-top: 30px; color: var(--gold); font-weight: bold; font-size: 1.1rem;">الموقع: سوريا - اللاذقية - المنطقة الصناعية</p>
+    <p style="margin-top: 30px; color: var(--gold); font-weight: bold; font-size: 1.2rem;" id="contactAddress">سوريا - اللاذقية - المنطقة الصناعية</p>
 </section>
 
 <footer>
-    <p>جميع الحقوق محفوظة لشركة سمين دنيز - SAMIN DENIZ ©️ 2026</p>
+    <p id="footerText">SAMIN DENIZ ©️ 2026 - جميع الحقوق محفوظة</p>
 </footer>
 
+<script>
+// كائن الترجمات للنصوص المختلفة داخل الموقع
+const translations = {
+    ar: {
+        navHome: "الرئيسية",
+        navColors: "كتالوج الألوان",
+        navAbout: "المنتجات",
+        navContact: "اتصل بنا",
+        langBtn: "🌐 العربية",
+        heroSubtitle: "الوكيل المعتمد لدهانات \"أرواد\" البحرية في اللاذقية",
+        heroBtn: "اطلب استشارة فنية الآن",
+        colorsTitle: "كتالوج الألوان",
+        searchPlaceholder: "ابحث عن رقم RAL أو اسم اللون...",
+        loadMoreBtn: "عرض كافة الألوان",
+        loadLessBtn: "عرض أقل",
+        aboutTitle: "مميزات دهاناتنا",
+        feat1Title: "حماية تدوم",
+        feat1Desc: "تركيبات متطورة لمواجهة الرطوبة العالية والأملاح في مياه البحر.",
+        feat2Title: "جودة عالمية",
+        feat2Desc: "دهانات \"أرواد\" هي الخيار الأول للمهنيين في المنطقة الصناعية باللاذقية.",
+        feat3Title: "تنوع لوني",
+        feat3Desc: "تشكيلة واسعة من أكواد RAL لتناسب كافة احتياجات الصيانة والطلاء.",
+        contactTitle: "تواصل مع الخبراء",
+        contactSubtitle: "نحن هنا لمساعدتك في اختيار الطلاء الأنسب لمشروعك",
+        contactAddress: "سوريا - اللاذقية - المنطقة الصناعية",
+        footerText: "SAMIN DENIZ ©️ 2026 - جميع الحقوق محفوظة"
+    },
+    en: {
+        navHome: "Home",
+        navColors: "Color Catalog",
+        navAbout: "Products",
+        navContact: "Contact Us",
+        langBtn: "🌐 English",
+        heroSubtitle: "Authorized Agent for Arwad Marine Paints in Latakia",
+        heroBtn: "Request Technical Consultation",
+        colorsTitle: "Color Catalog",
+        searchPlaceholder: "Search by RAL number or color name...",
+        loadMoreBtn: "Show All Colors",
+        loadLessBtn: "Show Less",
+        aboutTitle: "Why Choose Our Paints",
+        feat1Title: "Durable Protection",
+        feat1Desc: "Advanced formulas engineered to withstand high humidity and marine salinity.",
+        feat2Title: "Global Quality",
+        feat2Desc: "Arwad maritime coatings are the professional choice in Latakia's industrial zone.",
+        feat3Title: "Color Variety",
+        feat3Desc: "A comprehensive selection of RAL codes tailored for all maintenance and marine needs.",
+        contactTitle: "Connect With Experts",
+        contactSubtitle: "We are here to assist you in selecting the ideal coatings for your project",
+        contactAddress: "Syria - Latakia - Industrial Area",
+        footerText: "SAMIN DENIZ ©️ 2026 - All Rights Reserved"
+    }
+};
+
+let currentLang = 'ar';
+
+function changeLanguage(lang) {
+    currentLang = lang;
+    const htmlTag = document.documentElement;
+    
+    // تغيير اتجاه الموقع واللغة في كود الـ HTML
+    if (lang === 'ar') {
+        htmlTag.setAttribute('dir', 'rtl');
+        htmlTag.setAttribute('lang', 'ar');
+    } else {
+        htmlTag.setAttribute('dir', 'ltr');
+        htmlTag.setAttribute('lang', 'en');
+    }
+
+    // تحديث النصوص في شريط التنقل والأقسام الرئيسية
+    document.getElementById('navHome').innerText = translations[lang].navHome;
+    document.getElementById('navColors').innerText = translations[lang].navColors;
+    document.getElementById('navAbout').innerText = translations[lang].navAbout;
+    document.getElementById('navContact').innerText = translations[lang].navContact;
+    document.getElementById('langBtn').innerText = translations[lang].langBtn;
+    
+    document.getElementById('heroSubtitle').innerText = translations[lang].heroSubtitle;
+    document.getElementById('heroBtn').innerText = translations[lang].heroBtn;
+    
+    document.getElementById('colorsTitle').innerText = translations[lang].colorsTitle;
+    document.getElementById('colorSearch').setAttribute('placeholder', translations[lang].searchPlaceholder);
+    
+    // تحديث نص زر التبديل
+    let cards = document.querySelectorAll('.color-card');
+    let isHidden = cards[8].style.display === 'none';
+    document.getElementById('loadMoreBtn').innerText = isHidden ? translations[lang].loadMoreBtn : translations[lang].loadLessBtn;
+    
+    document.getElementById('aboutTitle').innerText = translations[lang].aboutTitle;
+    document.getElementById('feat1Title').innerText = translations[lang].feat1Title;
+    document.getElementById('feat1Desc').innerText = translations[lang].feat1Desc;
+    document.getElementById('feat2Title').innerText = translations[lang].feat2Title;
+    document.getElementById('feat2Desc').innerText = translations[lang].feat2Desc;
+    document.getElementById('feat3Title').innerText = translations[lang].feat3Title;
+    document.getElementById('feat3Desc').innerText = translations[lang].feat3Desc;
+    
+    document.getElementById('contactTitle').innerText = translations[lang].contactTitle;
+    document.getElementById('contactSubtitle').innerText = translations[lang].contactSubtitle;
+    document.getElementById('contactAddress').innerText = translations[lang].contactAddress;
+    document.getElementById('footerText').innerText = translations[lang].footerText;
+}
+
+window.onscroll = function() {
+    let header = document.getElementById("mainHeader");
+    if (window.scrollY > 50) {
+        header.style.background = "rgba(18, 18, 18, 0.85)";
+        header.style.padding = "5px 8%";
+    } else {
+        header.style.background = "rgba(255, 255, 255, 0.1)";
+        header.style.padding = "10px 8%";
+    }
+};
+
+function toggleColors() {
+    let cards = document.querySelectorAll('.color-card');
+    let btn = document.querySelector('.btn-more');
+    let isHidden = cards[8].style.display === 'none';
+    
+    cards.forEach((card, index) => {
+        if (index >= 8) card.style.display = isHidden ? 'block' : 'none';
+    });
+    btn.innerText = isHidden ? translations[currentLang].loadLessBtn : translations[currentLang].loadMoreBtn;
+}
+
+function filterColors() {
+    let input = document.getElementById('colorSearch').value.toLowerCase();
+    let cards = document.querySelectorAll('.color-card');
+    let loadMoreBtn = document.getElementById('loadMoreSection');
+    
+    if (input.length > 0) {
+        loadMoreBtn.style.display = 'none';
+        cards.forEach(card => {
+            let text = (card.getAttribute('data-code') + card.getAttribute('data-name')).toLowerCase();
+            card.style.display = text.includes(input) ? 'block' : 'none';
+        });
+    } else {
+        loadMoreBtn.style.display = 'block';
+        cards.forEach((card, index) => {
+            card.style.display = (index < 8) ? 'block' : 'none';
+        });
+    }
+}
+</script>
 </body>
 </html>
