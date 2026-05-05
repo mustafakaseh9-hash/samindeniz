@@ -163,11 +163,11 @@
             left: 50%;
             min-width: 100%;
             min-height: 100%;
-            width: auto;
-            height: auto;
+            width: 100%;
+            height: 100%;
             z-index: 1;
             transform: translate(-50%, -50%);
-            object-fit: cover;
+            object-fit: cover; /* تم تعديل هذه القيمة فقط لضمان متجاوبية الفيديو وملاءمته بالكامل لشاشات الهواتف دون قطش */
         }
 
         .hero::before {
@@ -297,6 +297,84 @@
 
         @media (max-width: 1100px) { .paint-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .paint-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 2.5rem; } }
+
+        /* ------------------------------------------------------------- */
+        /* التعديل الإضافي الخاص بشاشات الموبايل (دون المساس بالكمبيوتر) */
+        /* ------------------------------------------------------------- */
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 4%; /* تقليص المسافات لكي تتسع العناصر في سطر واحد */
+            }
+            .logo-nav-img {
+                height: 42px; /* تصغير طفيف للوغو لتوفير مساحة */
+            }
+            nav a {
+                font-size: 0.8rem; /* ضبط حجم خط الروابط ليتناسب مع شاشات الموبايل */
+                padding: 5px 6px;
+            }
+            html[dir="rtl"] nav a { margin-right: 8px; margin-left: 0; }
+            html[dir="ltr"] nav a { margin-left: 8px; margin-right: 0; }
+
+            .lang-dropdown {
+                margin: 0;
+            }
+            html[dir="rtl"] .lang-dropdown { margin-right: 8px; margin-left: 0; }
+            html[dir="ltr"] .lang-dropdown { margin-left: 8px; margin-right: 0; }
+
+            .lang-btn {
+                padding: 6px 12px; /* تحسين مظهر زر اللغة ليكون مناسباً للمساحة */
+                font-size: 0.8rem;
+                gap: 5px;
+            }
+            .dropdown-content {
+                top: 38px;
+                min-width: 100px;
+            }
+            
+            /* تحسين عرض شبكة الألوان وعناصرها على الموبايل لتظهر كعمودين متناسقين */
+            .paint-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 15px;
+                margin: 30px auto;
+            }
+            .color-swatch {
+                height: 100px;
+            }
+            .color-info {
+                padding: 12px;
+            }
+            .ral-code {
+                font-size: 0.95rem;
+            }
+            .color-name {
+                font-size: 0.65rem;
+            }
+            .paint-section {
+                padding: 60px 5%;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .contact-box {
+                margin: 40px 5%;
+                padding: 50px 5%;
+                border-radius: 30px;
+            }
+            .phone-link {
+                font-size: 1.4rem;
+                padding: 12px 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav a {
+                font-size: 0.72rem; /* تقليص إضافي بسيط للشاشات الصغيرة جداً لضمان عدم اختفاء أي عنصر */
+                padding: 5px 4px;
+            }
+            .logo-nav-img {
+                height: 35px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -511,7 +589,7 @@ window.onscroll = function() {
 
 function toggleColors() {
     let cards = document.querySelectorAll('.color-card');
-    let btn = document.querySelector('.btn-more');
+    let btn = document.getElementById('loadMoreBtn');
     let isHidden = cards[8].style.display === 'none';
     
     cards.forEach((card, index) => {
