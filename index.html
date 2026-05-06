@@ -252,7 +252,7 @@
         }
 
         /* ------------------------------------------------------------- */
-        /* التعديل الجديد: سكشن تواصل مع الخبراء (Glassmorphism) */
+        /* القسم الزجاجي المطور والمموه: تواصل مع الخبراء */
         /* ------------------------------------------------------------- */
         .glass-contact-section {
             padding: 120px 8%;
@@ -381,6 +381,7 @@
         <input type="text" id="colorSearch" placeholder="ابحث عن رقم RAL أو اسم اللون..." onkeyup="filterColors()">
     </div>
     <div class="paint-grid" id="colorGrid">
+        <!-- الـ 24 لون كاملة -->
         <div class="color-card" data-code="9002" data-name="grey white"><div class="color-swatch" style="background:#e7ebda"></div><div class="color-info"><span class="ral-code">RAL 9002</span><span class="color-name">Grey White</span></div></div>
         <div class="color-card" data-code="9010" data-name="pure white"><div class="color-swatch" style="background:#f7fbe9"></div><div class="color-info"><span class="ral-code">RAL 9010</span><span class="color-name">Pure White</span></div></div>
         <div class="color-card" data-code="1015" data-name="light ivory"><div class="color-swatch" style="background:#e6d195"></div><div class="color-info"><span class="ral-code">RAL 1015</span><span class="color-name">Light Ivory</span></div></div>
@@ -389,11 +390,22 @@
         <div class="color-card" data-code="1028" data-name="melon yellow"><div class="color-swatch" style="background:#ffa500"></div><div class="color-info"><span class="ral-code">RAL 1028</span><span class="color-name">Melon Yellow</span></div></div>
         <div class="color-card" data-code="2009" data-name="traffic orange"><div class="color-swatch" style="background:#e15501"></div><div class="color-info"><span class="ral-code">RAL 2009</span><span class="color-name">Traffic Orange</span></div></div>
         <div class="color-card" data-code="3020" data-name="traffic red"><div class="color-swatch" style="background:#c1121c"></div><div class="color-info"><span class="ral-code">RAL 3020</span><span class="color-name">Traffic Red</span></div></div>
-        <!-- الألوان المخفية -->
         <div class="color-card" data-code="8003" data-name="clay brown" style="display:none"><div class="color-swatch" style="background:#844c2b"></div><div class="color-info"><span class="ral-code">RAL 8003</span><span class="color-name">Clay Brown</span></div></div>
         <div class="color-card" data-code="8011" data-name="nut brown" style="display:none"><div class="color-swatch" style="background:#5b3423"></div><div class="color-info"><span class="ral-code">RAL 8011</span><span class="color-name">Nut Brown</span></div></div>
         <div class="color-card" data-code="3000" data-name="flame red" style="display:none"><div class="color-swatch" style="background:#af2b1e"></div><div class="color-info"><span class="ral-code">RAL 3000</span><span class="color-name">Flame Red</span></div></div>
         <div class="color-card" data-code="3004" data-name="purple red" style="display:none"><div class="color-swatch" style="background:#7e191b"></div><div class="color-info"><span class="ral-code">RAL 3004</span><span class="color-name">Purple Red</span></div></div>
+        <div class="color-card" data-code="7032" data-name="pebble grey" style="display:none"><div class="color-swatch" style="background:#b0af98"></div><div class="color-info"><span class="ral-code">RAL 7032</span><span class="color-name">Pebble Grey</span></div></div>
+        <div class="color-card" data-code="6018" data-name="yellow green" style="display:none"><div class="color-swatch" style="background:#4b6e2a"></div><div class="color-info"><span class="ral-code">RAL 6018</span><span class="color-name">Yellow Green</span></div></div>
+        <div class="color-card" data-code="6001" data-name="emerald green" style="display:none"><div class="color-swatch" style="background:#005b2b"></div><div class="color-info"><span class="ral-code">RAL 6001</span><span class="color-name">Emerald Green</span></div></div>
+        <div class="color-card" data-code="6005" data-name="moss green" style="display:none"><div class="color-swatch" style="background:#002e24"></div><div class="color-info"><span class="ral-code">RAL 6005</span><span class="color-name">Moss Green</span></div></div>
+        <div class="color-card" data-code="5015" data-name="sky blue" style="display:none"><div class="color-swatch" style="background:#226c9d"></div><div class="color-info"><span class="ral-code">RAL 5015</span><span class="color-name">Sky Blue</span></div></div>
+        <div class="color-card" data-code="5002" data-name="ultramarine blue" style="display:none"><div class="color-swatch" style="background:#002366"></div><div class="color-info"><span class="ral-code">RAL 5002</span><span class="color-name">Ultramarine Blue</span></div></div>
+        <div class="color-card" data-code="5017" data-name="traffic blue" style="display:none"><div class="color-swatch" style="background:#063971"></div><div class="color-info"><span class="ral-code">RAL 5017</span><span class="color-name">Traffic Blue</span></div></div>
+        <div class="color-card" data-code="5013" data-name="cobalt blue" style="display:none"><div class="color-swatch" style="background:#1e213d"></div><div class="color-info"><span class="ral-code">RAL 5013</span><span class="color-name">Cobalt Blue</span></div></div>
+        <div class="color-card" data-code="9006" data-name="white aluminium" style="display:none"><div class="color-swatch" style="background:#a5a8a6"></div><div class="color-info"><span class="ral-code">RAL 9006</span><span class="color-name">White Aluminium</span></div></div>
+        <div class="color-card" data-code="7040" data-name="window grey" style="display:none"><div class="color-swatch" style="background:#7d8489"></div><div class="color-info"><span class="ral-code">RAL 7040</span><span class="color-name">Window Grey</span></div></div>
+        <div class="color-card" data-code="7046" data-name="telegrey 2" style="display:none"><div class="color-swatch" style="background:#82898e"></div><div class="color-info"><span class="ral-code">RAL 7046</span><span class="color-name">Telegrey 2</span></div></div>
+        <div class="color-card" data-code="7016" data-name="anthracite grey" style="display:none"><div class="color-swatch" style="background:#383e42"></div><div class="color-info"><span class="ral-code">RAL 7016</span><span class="color-name">Anthracite Grey</span></div></div>
     </div>
     <div id="loadMoreSection">
         <button class="btn-more" id="loadMoreBtn" onclick="toggleColors()">عرض كافة الألوان</button>
@@ -420,7 +432,6 @@
     </div>
 </section>
 
-<!-- القسم الزجاجي المطور بالكامل -->
 <section class="glass-contact-section" id="contact">
     <div class="glass-container">
         <h2 id="contactTitle">تواصل مع الخبراء</h2>
@@ -483,7 +494,11 @@ function changeLanguage(lang) {
     document.getElementById('heroBtn').innerText = translations[lang].heroBtn;
     document.getElementById('colorsTitle').innerText = translations[lang].colorsTitle;
     document.getElementById('colorSearch').setAttribute('placeholder', translations[lang].searchPlaceholder);
-    document.getElementById('loadMoreBtn').innerText = translations[lang].loadMoreBtn;
+    
+    let cards = document.querySelectorAll('.color-card');
+    let isHidden = (cards.length > 8 && cards[8].style.display === 'none');
+    document.getElementById('loadMoreBtn').innerText = isHidden ? translations[lang].loadMoreBtn : translations[lang].loadLessBtn;
+    
     document.getElementById('aboutTitle').innerText = translations[lang].aboutTitle;
     document.getElementById('feat1Title').innerText = translations[lang].feat1Title;
     document.getElementById('feat1Desc').innerText = translations[lang].feat1Desc;
