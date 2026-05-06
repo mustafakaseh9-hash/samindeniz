@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سمين دنيز - SAMIN DENIZ</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --main-dark: #121212;
@@ -15,7 +16,6 @@
             --glass: rgba(255, 255, 255, 0.1);
             --glass-border: rgba(255, 255, 255, 0.2);
             --light-bg: #fdfdfd;
-            /* تم تعديل اللون هنا ليصبح أغمق قليلاً من السابق */
             --contrast-bg: #e2e2e2; 
         }
 
@@ -49,7 +49,6 @@
 
         nav { display: flex; align-items: center; }
         
-        /* تباعد الروابط حسب اتجاه الصفحة */
         html[dir="rtl"] nav a { margin-right: 25px; margin-left: 0; }
         html[dir="ltr"] nav a { margin-left: 25px; margin-right: 0; }
 
@@ -80,11 +79,7 @@
         nav a:hover { color: var(--gold); transform: translateY(-2px); }
         nav a:hover::after { width: 80%; }
 
-        /* تنسيق قائمة اختيار اللغة */
-        .lang-dropdown {
-            position: relative;
-            display: inline-block;
-        }
+        .lang-dropdown { position: relative; display: inline-block; }
         html[dir="rtl"] .lang-dropdown { margin-right: 25px; margin-left: 0; }
         html[dir="ltr"] .lang-dropdown { margin-left: 25px; margin-right: 0; }
 
@@ -104,11 +99,7 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        .lang-btn:hover {
-            background: var(--gold);
-            color: var(--main-dark);
-            box-shadow: 0 0 15px var(--gold);
-        }
+        .lang-btn:hover { background: var(--gold); color: var(--main-dark); box-shadow: 0 0 15px var(--gold); }
 
         .dropdown-content {
             display: none;
@@ -135,15 +126,8 @@
             text-align: center;
             transition: 0.3s;
         }
-
-        .dropdown-content a:hover {
-            background: var(--gold);
-            color: var(--main-dark);
-        }
-
-        .lang-dropdown:hover .dropdown-content {
-            display: block;
-        }
+        .dropdown-content a:hover { background: var(--gold); color: var(--main-dark); }
+        .lang-dropdown:hover .dropdown-content { display: block; }
 
         .hero {
             position: relative;
@@ -167,7 +151,7 @@
             height: 100%;
             z-index: 1;
             transform: translate(-50%, -50%);
-            object-fit: cover; /* تم تعديل هذه القيمة فقط لضمان متجاوبية الفيديو وملاءمته بالكامل لشاشات الهواتف دون قطش */
+            object-fit: cover;
         }
 
         .hero::before {
@@ -178,21 +162,8 @@
             z-index: 2;
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 3;
-            width: 100%;
-            padding: 0 20px;
-        }
-
-        .hero h1 { 
-            font-size: clamp(2.5rem, 8vw, 5rem); 
-            font-weight: 900; 
-            margin-bottom: 20px; 
-            text-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            animation: fadeInDown 1s ease;
-        }
-
+        .hero-content { position: relative; z-index: 3; width: 100%; padding: 0 20px; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.6); animation: fadeInDown 1s ease; }
         .hero p { 
             font-size: clamp(1.1rem, 2vw, 1.6rem); 
             color: var(--silver);
@@ -232,10 +203,8 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
         }
 
-        /* شبكة الألوان - اتجاه العرض مرن حسب اللغة */
         .paint-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; max-width: 1200px; margin: 50px auto; }
-        html[dir="rtl"] .paint-grid { direction: ltr; } /* للحفاظ على ترتيب الأرقام لليسار دائماً */
-        html[dir="ltr"] .paint-grid { direction: ltr; }
+        html[dir="rtl"] .paint-grid { direction: ltr; }
         
         .color-card { background: #fff; border-radius: 20px; overflow: hidden; transition: 0.5s; box-shadow: 0 10px 20px rgba(0,0,0,0.03); border: 1px solid #f0f0f0; }
         .color-card:hover { transform: translateY(-15px); border-color: var(--gold); }
@@ -247,7 +216,6 @@
         .btn-more { background: var(--main-dark); color: var(--gold); border: 2px solid var(--gold); padding: 15px 60px; border-radius: 100px; font-weight: 900; cursor: pointer; transition: 0.4s; font-family: 'Cairo'; }
         .btn-more:hover { background: var(--gold); color: white; }
 
-        /* الفاصل المائل */
         .section-divider {
             height: 150px;
             background: var(--light-bg);
@@ -282,13 +250,83 @@
             box-shadow: 0 30px 60px rgba(0,0,0,0.12);
             border-top-color: var(--main-dark);
         }
-        .card:active {
-            transform: translateY(-30px) scale(1.05);
-            transition: all 0.3s ease;
+
+        /* ------------------------------------------------------------- */
+        /* التعديل الجديد: سكشن تواصل مع الخبراء (Glassmorphism) */
+        /* ------------------------------------------------------------- */
+        .glass-contact-section {
+            padding: 120px 8%;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('1.jpg.jpeg') no-repeat center center/cover;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .contact-box { background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%); color: white; padding: 80px 10%; border-radius: 50px; margin: 60px 10%; border: 1px solid rgba(197, 160, 89, 0.3); text-align: center; }
-        .phone-link { display: inline-block; background: var(--gold); color: var(--main-dark); padding: 18px 50px; border-radius: 100px; text-decoration: none; font-size: 2rem; font-weight: 900; margin-top: 35px; direction: ltr; }
+        .glass-container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            padding: 80px 40px;
+            text-align: center;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+            animation: fadeInUp 1s ease;
+        }
+
+        .glass-container h2 {
+            color: var(--white);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .glass-container p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            margin-bottom: 50px;
+            font-weight: 400;
+        }
+
+        .phone-link-glass {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--gold);
+            color: var(--main-dark);
+            padding: 22px 60px;
+            border-radius: 100px;
+            text-decoration: none;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 900;
+            direction: ltr;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 40px rgba(197, 160, 89, 0.4);
+        }
+
+        .phone-link-glass:hover {
+            transform: scale(1.05) translateY(-5px);
+            background: var(--white);
+            box-shadow: 0 20px 50px rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-address-box {
+            margin-top: 45px;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+        }
 
         footer { background: #000; color: #777; text-align: center; padding: 50px; }
 
@@ -296,84 +334,12 @@
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 1100px) { .paint-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .paint-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 2.5rem; } }
-
-        /* ------------------------------------------------------------- */
-        /* التعديل الإضافي الخاص بشاشات الموبايل (دون المساس بالكمبيوتر) */
-        /* ------------------------------------------------------------- */
         @media (max-width: 768px) {
-            header {
-                padding: 10px 4%; /* تقليص المسافات لكي تتسع العناصر في سطر واحد */
-            }
-            .logo-nav-img {
-                height: 42px; /* تصغير طفيف للوغو لتوفير مساحة */
-            }
-            nav a {
-                font-size: 0.8rem; /* ضبط حجم خط الروابط ليتناسب مع شاشات الموبايل */
-                padding: 5px 6px;
-            }
-            html[dir="rtl"] nav a { margin-right: 8px; margin-left: 0; }
-            html[dir="ltr"] nav a { margin-left: 8px; margin-right: 0; }
-
-            .lang-dropdown {
-                margin: 0;
-            }
-            html[dir="rtl"] .lang-dropdown { margin-right: 8px; margin-left: 0; }
-            html[dir="ltr"] .lang-dropdown { margin-left: 8px; margin-right: 0; }
-
-            .lang-btn {
-                padding: 6px 12px; /* تحسين مظهر زر اللغة ليكون مناسباً للمساحة */
-                font-size: 0.8rem;
-                gap: 5px;
-            }
-            .dropdown-content {
-                top: 38px;
-                min-width: 100px;
-            }
-            
-            /* تحسين عرض شبكة الألوان وعناصرها على الموبايل لتظهر كعمودين متناسقين */
-            .paint-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 15px;
-                margin: 30px auto;
-            }
-            .color-swatch {
-                height: 100px;
-            }
-            .color-info {
-                padding: 12px;
-            }
-            .ral-code {
-                font-size: 0.95rem;
-            }
-            .color-name {
-                font-size: 0.65rem;
-            }
-            .paint-section {
-                padding: 60px 5%;
-            }
-            .section-title {
-                font-size: 2rem;
-            }
-            .contact-box {
-                margin: 40px 5%;
-                padding: 50px 5%;
-                border-radius: 30px;
-            }
-            .phone-link {
-                font-size: 1.4rem;
-                padding: 12px 30px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            nav a {
-                font-size: 0.72rem; /* تقليص إضافي بسيط للشاشات الصغيرة جداً لضمان عدم اختفاء أي عنصر */
-                padding: 5px 4px;
-            }
-            .logo-nav-img {
-                height: 35px;
-            }
+            header { padding: 10px 4%; }
+            .logo-nav-img { height: 42px; }
+            nav a { font-size: 0.8rem; padding: 5px 6px; }
+            .glass-container { padding: 60px 20px; border-radius: 30px; }
+            .phone-link-glass { padding: 15px 30px; }
         }
     </style>
 </head>
@@ -423,22 +389,11 @@
         <div class="color-card" data-code="1028" data-name="melon yellow"><div class="color-swatch" style="background:#ffa500"></div><div class="color-info"><span class="ral-code">RAL 1028</span><span class="color-name">Melon Yellow</span></div></div>
         <div class="color-card" data-code="2009" data-name="traffic orange"><div class="color-swatch" style="background:#e15501"></div><div class="color-info"><span class="ral-code">RAL 2009</span><span class="color-name">Traffic Orange</span></div></div>
         <div class="color-card" data-code="3020" data-name="traffic red"><div class="color-swatch" style="background:#c1121c"></div><div class="color-info"><span class="ral-code">RAL 3020</span><span class="color-name">Traffic Red</span></div></div>
+        <!-- الألوان المخفية -->
         <div class="color-card" data-code="8003" data-name="clay brown" style="display:none"><div class="color-swatch" style="background:#844c2b"></div><div class="color-info"><span class="ral-code">RAL 8003</span><span class="color-name">Clay Brown</span></div></div>
         <div class="color-card" data-code="8011" data-name="nut brown" style="display:none"><div class="color-swatch" style="background:#5b3423"></div><div class="color-info"><span class="ral-code">RAL 8011</span><span class="color-name">Nut Brown</span></div></div>
         <div class="color-card" data-code="3000" data-name="flame red" style="display:none"><div class="color-swatch" style="background:#af2b1e"></div><div class="color-info"><span class="ral-code">RAL 3000</span><span class="color-name">Flame Red</span></div></div>
         <div class="color-card" data-code="3004" data-name="purple red" style="display:none"><div class="color-swatch" style="background:#7e191b"></div><div class="color-info"><span class="ral-code">RAL 3004</span><span class="color-name">Purple Red</span></div></div>
-        <div class="color-card" data-code="7032" data-name="pebble grey" style="display:none"><div class="color-swatch" style="background:#b0af98"></div><div class="color-info"><span class="ral-code">RAL 7032</span><span class="color-name">Pebble Grey</span></div></div>
-        <div class="color-card" data-code="6018" data-name="yellow green" style="display:none"><div class="color-swatch" style="background:#4b6e2a"></div><div class="color-info"><span class="ral-code">RAL 6018</span><span class="color-name">Yellow Green</span></div></div>
-        <div class="color-card" data-code="6001" data-name="emerald green" style="display:none"><div class="color-swatch" style="background:#005b2b"></div><div class="color-info"><span class="ral-code">RAL 6001</span><span class="color-name">Emerald Green</span></div></div>
-        <div class="color-card" data-code="6005" data-name="moss green" style="display:none"><div class="color-swatch" style="background:#002e24"></div><div class="color-info"><span class="ral-code">RAL 6005</span><span class="color-name">Moss Green</span></div></div>
-        <div class="color-card" data-code="5015" data-name="sky blue" style="display:none"><div class="color-swatch" style="background:#226c9d"></div><div class="color-info"><span class="ral-code">RAL 5015</span><span class="color-name">Sky Blue</span></div></div>
-        <div class="color-card" data-code="5002" data-name="ultramarine blue" style="display:none"><div class="color-swatch" style="background:#002366"></div><div class="color-info"><span class="ral-code">RAL 5002</span><span class="color-name">Ultramarine Blue</span></div></div>
-        <div class="color-card" data-code="5017" data-name="traffic blue" style="display:none"><div class="color-swatch" style="background:#063971"></div><div class="color-info"><span class="ral-code">RAL 5017</span><span class="color-name">Traffic Blue</span></div></div>
-        <div class="color-card" data-code="5013" data-name="cobalt blue" style="display:none"><div class="color-swatch" style="background:#1e213d"></div><div class="color-info"><span class="ral-code">RAL 5013</span><span class="color-name">Cobalt Blue</span></div></div>
-        <div class="color-card" data-code="9006" data-name="white aluminium" style="display:none"><div class="color-swatch" style="background:#a5a8a6"></div><div class="color-info"><span class="ral-code">RAL 9006</span><span class="color-name">White Aluminium</span></div></div>
-        <div class="color-card" data-code="7040" data-name="window grey" style="display:none"><div class="color-swatch" style="background:#7d8489"></div><div class="color-info"><span class="ral-code">RAL 7040</span><span class="color-name">Window Grey</span></div></div>
-        <div class="color-card" data-code="7046" data-name="telegrey 2" style="display:none"><div class="color-swatch" style="background:#82898e"></div><div class="color-info"><span class="ral-code">RAL 7046</span><span class="color-name">Telegrey 2</span></div></div>
-        <div class="color-card" data-code="7016" data-name="anthracite grey" style="display:none"><div class="color-swatch" style="background:#383e42"></div><div class="color-info"><span class="ral-code">RAL 7016</span><span class="color-name">Anthracite Grey</span></div></div>
     </div>
     <div id="loadMoreSection">
         <button class="btn-more" id="loadMoreBtn" onclick="toggleColors()">عرض كافة الألوان</button>
@@ -465,11 +420,22 @@
     </div>
 </section>
 
-<section class="contact-box" id="contact">
-    <h2 id="contactTitle">تواصل مع الخبراء</h2>
-    <p id="contactSubtitle">نحن هنا لمساعدتك في اختيار الطلاء الأنسب لمشروعك</p>
-    <a href="tel:+905533327333" class="phone-link">+90 553 332 73 33</a>
-    <p style="margin-top: 30px; color: var(--gold); font-weight: bold; font-size: 1.2rem;" id="contactAddress">سوريا - اللاذقية - المنطقة الصناعية</p>
+<!-- القسم الزجاجي المطور بالكامل -->
+<section class="glass-contact-section" id="contact">
+    <div class="glass-container">
+        <h2 id="contactTitle">تواصل مع الخبراء</h2>
+        <p id="contactSubtitle">نحن هنا لمساعدتك في اختيار الطلاء الأنسب لمشروعك</p>
+        
+        <a href="tel:+905533327333" class="phone-link-glass">
+            <i class="fas fa-phone-alt"></i>
+            <span>+90 553 332 73 33</span>
+        </a>
+
+        <div class="glass-address-box">
+            <i class="fas fa-map-marker-alt"></i>
+            <span id="contactAddress">سوريا - اللاذقية - المنطقة الصناعية</span>
+        </div>
+    </div>
 </section>
 
 <footer>
@@ -477,55 +443,26 @@
 </footer>
 
 <script>
-// كائن الترجمات للنصوص المختلفة داخل الموقع
 const translations = {
     ar: {
-        navHome: "الرئيسية",
-        navColors: "كتالوج الألوان",
-        navAbout: "المنتجات",
-        navContact: "اتصل بنا",
-        langBtn: "🌐 العربية",
-        heroSubtitle: "الوكيل المعتمد لدهانات \"أرواد\" البحرية في اللاذقية",
-        heroBtn: "اطلب استشارة فنية الآن",
-        colorsTitle: "كتالوج الألوان",
-        searchPlaceholder: "ابحث عن رقم RAL أو اسم اللون...",
-        loadMoreBtn: "عرض كافة الألوان",
-        loadLessBtn: "عرض أقل",
-        aboutTitle: "مميزات دهاناتنا",
-        feat1Title: "حماية تدوم",
-        feat1Desc: "تركيبات متطورة لمواجهة الرطوبة العالية والأملاح في مياه البحر.",
-        feat2Title: "جودة عالمية",
-        feat2Desc: "دهانات \"أرواد\" هي الخيار الأول للمهنيين في المنطقة الصناعية باللاذقية.",
-        feat3Title: "تنوع لوني",
-        feat3Desc: "تشكيلة واسعة من أكواد RAL لتناسب كافة احتياجات الصيانة والطلاء.",
-        contactTitle: "تواصل مع الخبراء",
-        contactSubtitle: "نحن هنا لمساعدتك في اختيار الطلاء الأنسب لمشروعك",
-        contactAddress: "سوريا - اللاذقية - المنطقة الصناعية",
-        footerText: "SAMIN DENIZ ©️ 2026 - جميع الحقوق محفوظة"
+        navHome: "الرئيسية", navColors: "كتالوج الألوان", navAbout: "المنتجات", navContact: "اتصل بنا", langBtn: "🌐 العربية",
+        heroSubtitle: "الوكيل المعتمد لدهانات \"أرواد\" البحرية في اللاذقية", heroBtn: "اطلب استشارة فنية الآن",
+        colorsTitle: "كتالوج الألوان", searchPlaceholder: "ابحث عن رقم RAL أو اسم اللون...", loadMoreBtn: "عرض كافة الألوان", loadLessBtn: "عرض أقل",
+        aboutTitle: "مميزات دهاناتنا", feat1Title: "حماية تدوم", feat1Desc: "تركيبات متطورة لمواجهة الرطوبة العالية والأملاح في مياه البحر.",
+        feat2Title: "جودة عالمية", feat2Desc: "دهانات \"أرواد\" هي الخيار الأول للمهنيين في المنطقة الصناعية باللاذقية.",
+        feat3Title: "تنوع لوني", feat3Desc: "تشكيلة واسعة من أكواد RAL لتناسب كافة احتياجات الصيانة والطلاء.",
+        contactTitle: "تواصل مع الخبراء", contactSubtitle: "نحن هنا لمساعدتك في اختيار الطلاء الأنسب لمشروعك",
+        contactAddress: "سوريا - اللاذقية - المنطقة الصناعية", footerText: "SAMIN DENIZ ©️ 2026 - جميع الحقوق محفوظة"
     },
     en: {
-        navHome: "Home",
-        navColors: "Color Catalog",
-        navAbout: "Products",
-        navContact: "Contact Us",
-        langBtn: "🌐 English",
-        heroSubtitle: "Authorized Agent for Arwad Marine Paints in Latakia",
-        heroBtn: "Request Technical Consultation",
-        colorsTitle: "Color Catalog",
-        searchPlaceholder: "Search by RAL number or color name...",
-        loadMoreBtn: "Show All Colors",
-        loadLessBtn: "Show Less",
-        aboutTitle: "Why Choose Our Paints",
-        feat1Title: "Durable Protection",
-        feat1Desc: "Advanced formulas engineered to withstand high humidity and marine salinity.",
-        feat2Title: "Global Quality",
-        feat2Desc: "Arwad maritime coatings are the professional choice in Latakia's industrial zone.",
-        feat3Title: "Color Variety",
-        feat3Desc: "A comprehensive selection of RAL codes tailored for all maintenance and marine needs.",
-        contactTitle: "Connect With Experts",
-        contactSubtitle: "We are here to assist you in selecting the ideal coatings for your project",
-        contactAddress: "Syria - Latakia - Industrial Area",
-        footerText: "SAMIN DENIZ ©️ 2026 - All Rights Reserved"
+        navHome: "Home", navColors: "Color Catalog", navAbout: "Products", navContact: "Contact Us", langBtn: "🌐 English",
+        heroSubtitle: "Authorized Agent for Arwad Marine Paints in Latakia", heroBtn: "Request Technical Consultation",
+        colorsTitle: "Color Catalog", searchPlaceholder: "Search by RAL number or color name...", loadMoreBtn: "Show All Colors", loadLessBtn: "Show Less",
+        aboutTitle: "Why Choose Our Paints", feat1Title: "Durable Protection", feat1Desc: "Advanced formulas engineered to withstand high humidity and marine salinity.",
+        feat2Title: "Global Quality", feat2Desc: "Arwad maritime coatings are the professional choice in Latakia's industrial zone.",
+        feat3Title: "Color Variety", feat3Desc: "A comprehensive selection of RAL codes tailored for all maintenance and marine needs.",
+        contactTitle: "Connect With Experts", contactSubtitle: "We are here to assist you in selecting the ideal coatings for your project",
+        contactAddress: "Syria - Latakia - Industrial Area", footerText: "SAMIN DENIZ ©️ 2026 - All Rights Reserved"
     }
 };
 
@@ -534,34 +471,19 @@ let currentLang = 'ar';
 function changeLanguage(lang) {
     currentLang = lang;
     const htmlTag = document.documentElement;
-    
-    // تغيير اتجاه الموقع واللغة في كود الـ HTML
-    if (lang === 'ar') {
-        htmlTag.setAttribute('dir', 'rtl');
-        htmlTag.setAttribute('lang', 'ar');
-    } else {
-        htmlTag.setAttribute('dir', 'ltr');
-        htmlTag.setAttribute('lang', 'en');
-    }
+    htmlTag.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    htmlTag.setAttribute('lang', lang);
 
-    // تحديث النصوص في شريط التنقل والأقسام الرئيسية
     document.getElementById('navHome').innerText = translations[lang].navHome;
     document.getElementById('navColors').innerText = translations[lang].navColors;
     document.getElementById('navAbout').innerText = translations[lang].navAbout;
     document.getElementById('navContact').innerText = translations[lang].navContact;
     document.getElementById('langBtn').innerText = translations[lang].langBtn;
-    
     document.getElementById('heroSubtitle').innerText = translations[lang].heroSubtitle;
     document.getElementById('heroBtn').innerText = translations[lang].heroBtn;
-    
     document.getElementById('colorsTitle').innerText = translations[lang].colorsTitle;
     document.getElementById('colorSearch').setAttribute('placeholder', translations[lang].searchPlaceholder);
-    
-    // تحديث نص زر التبديل
-    let cards = document.querySelectorAll('.color-card');
-    let isHidden = cards[8].style.display === 'none';
-    document.getElementById('loadMoreBtn').innerText = isHidden ? translations[lang].loadMoreBtn : translations[lang].loadLessBtn;
-    
+    document.getElementById('loadMoreBtn').innerText = translations[lang].loadMoreBtn;
     document.getElementById('aboutTitle').innerText = translations[lang].aboutTitle;
     document.getElementById('feat1Title').innerText = translations[lang].feat1Title;
     document.getElementById('feat1Desc').innerText = translations[lang].feat1Desc;
@@ -569,32 +491,17 @@ function changeLanguage(lang) {
     document.getElementById('feat2Desc').innerText = translations[lang].feat2Desc;
     document.getElementById('feat3Title').innerText = translations[lang].feat3Title;
     document.getElementById('feat3Desc').innerText = translations[lang].feat3Desc;
-    
     document.getElementById('contactTitle').innerText = translations[lang].contactTitle;
     document.getElementById('contactSubtitle').innerText = translations[lang].contactSubtitle;
     document.getElementById('contactAddress').innerText = translations[lang].contactAddress;
     document.getElementById('footerText').innerText = translations[lang].footerText;
 }
 
-window.onscroll = function() {
-    let header = document.getElementById("mainHeader");
-    if (window.scrollY > 50) {
-        header.style.background = "rgba(18, 18, 18, 0.85)";
-        header.style.padding = "5px 8%";
-    } else {
-        header.style.background = "rgba(255, 255, 255, 0.1)";
-        header.style.padding = "10px 8%";
-    }
-};
-
 function toggleColors() {
     let cards = document.querySelectorAll('.color-card');
     let btn = document.getElementById('loadMoreBtn');
     let isHidden = cards[8].style.display === 'none';
-    
-    cards.forEach((card, index) => {
-        if (index >= 8) card.style.display = isHidden ? 'block' : 'none';
-    });
+    cards.forEach((card, index) => { if (index >= 8) card.style.display = isHidden ? 'block' : 'none'; });
     btn.innerText = isHidden ? translations[currentLang].loadLessBtn : translations[currentLang].loadMoreBtn;
 }
 
@@ -602,7 +509,6 @@ function filterColors() {
     let input = document.getElementById('colorSearch').value.toLowerCase();
     let cards = document.querySelectorAll('.color-card');
     let loadMoreBtn = document.getElementById('loadMoreSection');
-    
     if (input.length > 0) {
         loadMoreBtn.style.display = 'none';
         cards.forEach(card => {
@@ -611,9 +517,7 @@ function filterColors() {
         });
     } else {
         loadMoreBtn.style.display = 'block';
-        cards.forEach((card, index) => {
-            card.style.display = (index < 8) ? 'block' : 'none';
-        });
+        cards.forEach((card, index) => { card.style.display = (index < 8) ? 'block' : 'none'; });
     }
 }
 </script>
