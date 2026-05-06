@@ -38,6 +38,17 @@
             transition: all 0.4s ease;
         }
 
+        /* الجزء المسؤول عن تحويل الكلمات للأسود فقط عند النزول */
+        header.scrolled nav a, 
+        header.scrolled .lang-btn {
+            color: #000000 !important;
+            text-shadow: none !important;
+        }
+        
+        header.scrolled .lang-btn {
+            border-color: #000000 !important;
+        }
+
         .logo-nav-img {
             height: 60px;
             width: auto;
@@ -76,7 +87,7 @@
             box-shadow: 0 0 10px var(--gold);
         }
 
-        nav a:hover { color: var(--gold); transform: translateY(-2px); }
+        nav a:hover { color: var(--gold) !important; transform: translateY(-2px); }
         nav a:hover::after { width: 80%; }
 
         .lang-dropdown { position: relative; display: inline-block; }
@@ -99,7 +110,7 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        .lang-btn:hover { background: var(--gold); color: var(--main-dark); box-shadow: 0 0 15px var(--gold); }
+        .lang-btn:hover { background: var(--gold); color: var(--main-dark) !important; box-shadow: 0 0 15px var(--gold); }
 
         .dropdown-content {
             display: none;
@@ -381,7 +392,7 @@
         <input type="text" id="colorSearch" placeholder="ابحث عن رقم RAL أو اسم اللون..." onkeyup="filterColors()">
     </div>
     <div class="paint-grid" id="colorGrid">
-        <!-- الـ 24 لون كاملة -->
+        <!-- الـ 24 لون كاملة كما هي في الكود الأصلي -->
         <div class="color-card" data-code="9002" data-name="grey white"><div class="color-swatch" style="background:#e7ebda"></div><div class="color-info"><span class="ral-code">RAL 9002</span><span class="color-name">Grey White</span></div></div>
         <div class="color-card" data-code="9010" data-name="pure white"><div class="color-swatch" style="background:#f7fbe9"></div><div class="color-info"><span class="ral-code">RAL 9010</span><span class="color-name">Pure White</span></div></div>
         <div class="color-card" data-code="1015" data-name="light ivory"><div class="color-swatch" style="background:#e6d195"></div><div class="color-info"><span class="ral-code">RAL 1015</span><span class="color-name">Light Ivory</span></div></div>
@@ -390,6 +401,7 @@
         <div class="color-card" data-code="1028" data-name="melon yellow"><div class="color-swatch" style="background:#ffa500"></div><div class="color-info"><span class="ral-code">RAL 1028</span><span class="color-name">Melon Yellow</span></div></div>
         <div class="color-card" data-code="2009" data-name="traffic orange"><div class="color-swatch" style="background:#e15501"></div><div class="color-info"><span class="ral-code">RAL 2009</span><span class="color-name">Traffic Orange</span></div></div>
         <div class="color-card" data-code="3020" data-name="traffic red"><div class="color-swatch" style="background:#c1121c"></div><div class="color-info"><span class="ral-code">RAL 3020</span><span class="color-name">Traffic Red</span></div></div>
+        <!-- تم الحفاظ على بقية الـ 24 لون المخفية -->
         <div class="color-card" data-code="8003" data-name="clay brown" style="display:none"><div class="color-swatch" style="background:#844c2b"></div><div class="color-info"><span class="ral-code">RAL 8003</span><span class="color-name">Clay Brown</span></div></div>
         <div class="color-card" data-code="8011" data-name="nut brown" style="display:none"><div class="color-swatch" style="background:#5b3423"></div><div class="color-info"><span class="ral-code">RAL 8011</span><span class="color-name">Nut Brown</span></div></div>
         <div class="color-card" data-code="3000" data-name="flame red" style="display:none"><div class="color-swatch" style="background:#af2b1e"></div><div class="color-info"><span class="ral-code">RAL 3000</span><span class="color-name">Flame Red</span></div></div>
@@ -454,6 +466,16 @@
 </footer>
 
 <script>
+// تفعيل تحول لون الكلمات للأسود عند النزول
+window.onscroll = function() {
+    var header = document.getElementById("mainHeader");
+    if (window.pageYOffset > 50) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
+    }
+};
+
 const translations = {
     ar: {
         navHome: "الرئيسية", navColors: "كتالوج الألوان", navAbout: "المنتجات", navContact: "اتصل بنا", langBtn: "🌐 العربية",
